@@ -79,6 +79,14 @@ const ShopContextProvider = (props) => {
         fetchBanners();
     },[]);
 
+    // CLEAR STATE ON LOGOUT
+    useEffect(() => {
+        if (!token) {
+            setUserProfile({});
+            setUserOrders([]);
+        }
+    }, [token]);
+
     // USER PROFILE
     const fetchUserProfile = async () => {
         if(!token) return;

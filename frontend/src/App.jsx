@@ -18,6 +18,7 @@ import PlaceOrder from "./pages/PlaceOrder";
 import Wishlist from "./pages/Wishlist";
 import MyProfile from "./pages/MyProfile";
 import MyOrders from "./pages/MyOrders";
+import Login from "./pages/Login";
 
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
@@ -51,6 +52,7 @@ const App = () => {
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/profile" element={<MyProfile />} />
               <Route path="/orders" element={<MyOrders />} />
+              <Route path="/login" element={<Login />} />
 {/* Footer */}
 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 <Route path="/terms-conditions" element={<Terms />} />

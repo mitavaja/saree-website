@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { AuthContext } from "../context/AuthContext";
 
 const MyProfile = () => {
-  const { userProfile, fetchUserProfile, saveUserProfile, token, setToken } = useContext(ShopContext);
+  const { userProfile, fetchUserProfile, saveUserProfile, token, setToken, userOrders, fetchUserOrders } = useContext(ShopContext);
   const { logout: authLogout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,6 +22,7 @@ const MyProfile = () => {
   useEffect(()=>{
     if (token) {
       fetchUserProfile();
+      fetchUserOrders();
     }
   }, [token]);
 
@@ -51,7 +52,6 @@ const MyProfile = () => {
     authLogout();
     setToken("");
     localStorage.removeItem("token");
-    navigate("/");
     toast.info("Logged out successfully");
   };
 
@@ -74,6 +74,39 @@ const MyProfile = () => {
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 -mt-32 relative z-10">
         
+        {userOrders && userOrders.length === 0 ? (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-white p-12 text-center max-w-2xl mx-auto mt-10"
+          >
+            <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+              <span className="text-4xl">🛍️</span>
+            </div>
+            <h2 className="text-3xl font-serif text-[#082e21] mb-4">Unlock Your Profile</h2>
+            <p className="text-gray-500 mb-8 text-lg leading-relaxed">
+              Kindly order your fav items and you will be eligible for your profile and view and track your order.
+            </p>
+            <div className="flex flex-col items-center gap-4">
+              <button 
+                onClick={() => navigate("/collection")} 
+                className="bg-[#082e21] text-[#ecc153] px-10 py-4 rounded-full font-bold hover:bg-[#0b3d2c] transition shadow-lg text-lg"
+              >
+                Continue Order
+              </button>
+              
+              {!token && (
+                <button 
+                  onClick={() => navigate("/login")} 
+                  className="text-gray-500 hover:text-[#082e21] font-medium transition-colors"
+                >
+                  Already have an account? Login
+                </button>
+              )}
+            </div>
+
+          </motion.div>
+        ) : (
         <div className="flex flex-col md:flex-row gap-8">
           
           {/* Left Column: Avatar & Quick Actions */}
@@ -107,12 +140,21 @@ const MyProfile = () => {
                 View My Orders
               </button>
 
-              <button 
-                onClick={handleLogout} 
-                className="w-full bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 font-semibold py-3 rounded-xl transition-all"
-              >
-                Logout
-              </button>
+              {token ? (
+                <button 
+                  onClick={handleLogout} 
+                  className="w-full bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 font-semibold py-3 rounded-xl transition-all"
+                >
+                  Logout
+                </button>
+              ) : (
+                <button 
+                  onClick={() => navigate("/login")} 
+                  className="w-full bg-green-50 hover:bg-green-100 border border-[#082e21]/20 text-[#082e21] font-semibold py-3 rounded-xl transition-all"
+                >
+                  Login
+                </button>
+              )}
 
             </div>
           </motion.div>
@@ -166,6 +208,7 @@ const MyProfile = () => {
           </motion.div>
 
         </div>
+        )}
       </div>
 
       {/* Edit Profile Modal */}

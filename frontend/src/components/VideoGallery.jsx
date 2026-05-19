@@ -29,7 +29,7 @@ const VideoGallery = () => {
   };
 
   return (
-    <section className="w-full py-24 relative bg-[#082e21] overflow-hidden">
+    <section className="w-full h-[100vh] flex flex-col justify-center m-0 p-0 relative bg-[#082e21] overflow-hidden">
       
       {/* Premium Decorative Elements */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
@@ -37,13 +37,13 @@ const VideoGallery = () => {
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#ecc153] rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
 
       <div className="relative z-10 w-full px-6 lg:px-12">
-        <div className="text-center mb-20">
-          <span className="text-[#ecc153] uppercase tracking-[0.3em] text-sm font-bold mb-4 block">Cinematic Experience</span>
-          <h2 className="text-4xl md:text-6xl font-serif text-white mb-6 leading-tight">
+        <div className="text-center mb-10">
+          <span className="text-[#ecc153] uppercase tracking-[0.3em] text-sm font-bold mb-2 block">Cinematic Experience</span>
+          <h2 className="text-4xl md:text-5xl font-serif text-white mb-4 leading-tight">
             Saree Moments in <span className="italic text-[#ecc153]">Motion</span>
           </h2>
-          <div className="w-24 h-1 bg-[#ecc153] mx-auto mb-8 rounded-full"></div>
-          <p className="text-white/70 max-w-2xl mx-auto text-lg font-light leading-relaxed">
+          <div className="w-24 h-1 bg-[#ecc153] mx-auto mb-6 rounded-full"></div>
+          <p className="text-white/70 max-w-2xl mx-auto text-base md:text-lg font-light leading-relaxed">
             Witness the fluid grace and intricate details of our heritage sarees through these curated visual stories.
           </p>
         </div>

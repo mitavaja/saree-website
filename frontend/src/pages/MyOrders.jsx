@@ -3,6 +3,7 @@ import { ShopContext } from "../context/ShopContext";
 import Footer from "../components/Footer";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { FaBoxOpen } from "react-icons/fa";
 
 const MyOrders = () => {
   const { userOrders, fetchUserOrders, token } = useContext(ShopContext);
@@ -208,10 +209,16 @@ const MyOrders = () => {
         <div>
           {activeTab === "current" && (
             currentOrders.length === 0 ? (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-24 bg-white rounded-3xl border border-dashed border-gray-300 shadow-sm">
-                <span className="text-6xl mb-4 block">🛍️</span>
-                <p className="text-gray-400 text-lg font-medium">No active orders right now.</p>
-                <button onClick={() => navigate("/collection")} className="mt-6 px-6 py-2 bg-[#082e21] text-[#ecc153] rounded-full font-bold shadow-md hover:bg-[#0b3d2c] transition-colors">Shop Now</button>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center text-center py-24 bg-white rounded-3xl border border-dashed border-gray-300 shadow-sm">
+                <FaBoxOpen className="text-6xl text-gray-300 mb-4" />
+                <h2 className="text-2xl font-semibold mb-2">No active orders right now</h2>
+                <p className="text-gray-500 mb-6">Find your perfect saree and place an order.</p>
+                <button 
+                  onClick={() => navigate("/collection")} 
+                  className="bg-green-900 text-[#ecc153] px-6 py-3 rounded-md hover:bg-[#0b3d2c] transition font-bold"
+                >
+                  Explore Products
+                </button>
               </motion.div>
             ) : (
               currentOrders.map(renderOrderCard)
@@ -220,9 +227,16 @@ const MyOrders = () => {
 
           {activeTab === "past" && (
             pastOrders.length === 0 ? (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-24 bg-white rounded-3xl border border-dashed border-gray-300 shadow-sm">
-                <span className="text-6xl mb-4 block">📦</span>
-                <p className="text-gray-400 text-lg font-medium">Your order history is empty.</p>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center text-center py-24 bg-white rounded-3xl border border-dashed border-gray-300 shadow-sm">
+                <FaBoxOpen className="text-6xl text-gray-300 mb-4" />
+                <h2 className="text-2xl font-semibold mb-2">Your order history is empty</h2>
+                <p className="text-gray-500 mb-6">You haven't received any orders yet.</p>
+                <button 
+                  onClick={() => navigate("/collection")} 
+                  className="bg-green-900 text-[#ecc153] px-6 py-3 rounded-md hover:bg-[#0b3d2c] transition font-bold"
+                >
+                  Explore Products
+                </button>
               </motion.div>
             ) : (
               pastOrders.map(renderOrderCard)

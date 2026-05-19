@@ -4,10 +4,11 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { LuSearch, LuHeart, LuUser, LuShoppingCart, LuMenu } from "react-icons/lu";
 
 const Navbar = () => {
   const { user, logout: authLogout } = useContext(AuthContext);
-  const { cartItems, wishlistItems, products, setToken } = useContext(ShopContext);
+  const { cartItems, wishlistItems, products, setToken, token } = useContext(ShopContext);
   const navigate = useNavigate();
 
   const [showSearch, setShowSearch] = useState(false);
@@ -55,40 +56,47 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full bg-[#082e21]/90 backdrop-blur-md sticky top-0 z-[999] shadow-sm border-b border-white/10">
-      <div className="w-full px-6 lg:px-12 flex items-center justify-between py-2 font-medium">
+    <div className="w-full bg-white backdrop-blur-xl sticky top-0 z-[999] shadow-[0_4px_30px_rgba(0,0,0,0.04)] border-b border-[#082e21]/5 transition-all duration-300">
+      <div className="w-full px-6 lg:px-12 flex items-center justify-between py-0 font-medium">
         
         {/* Logo */}
-        <Link to="/">
+        <Link to="/" className="flex-shrink-0 flex items-center -my-2 md:-my-4">
           <img
             src={logo || assets.logo}
             alt="logo"
-            className="h-10 md:h-14 w-auto object-contain transition-all duration-300"
+            className="h-16 md:h-24 w-auto object-contain transition-transform duration-300 hover:scale-105"
           />
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden sm:flex gap-8 text-sm text-[#ecc153] font-semibold">
-
+        <ul className="hidden md:flex gap-8 text-[14px] text-[#082e21] font-semibold tracking-wider">
           {navLinks.map((item, index) => (
             <NavLink
               key={index}
               to={item.link}
               className={({ isActive }) =>
-                `flex flex-col items-center gap-1 ${
-                  isActive ? "border-b-2 border-[#ecc153]" : ""
+                `relative group flex flex-col items-center gap-1 transition-colors duration-300 hover:text-[#082e21]/80 ${
+                  isActive ? "text-[#082e21]" : "text-[#082e21]/90"
                 }`
               }
             >
-              <p>{item.name}</p>
+              {({ isActive }) => (
+                <>
+                  <span>{item.name}</span>
+                  <span
+                    className={`absolute -bottom-2 left-0 w-full h-[2px] bg-[#082e21] transition-all duration-300 rounded-full ${
+                      isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
+                    }`}
+                  />
+                </>
+              )}
             </NavLink>
           ))}
-
         </ul>
 
         {/* Icons */}
-        <div className="flex items-center gap-6 relative">
-
+        <div className="flex items-center gap-5 sm:gap-7 relative text-[#082e21]">
+          
           {/* SEARCH */}
           <div className="relative flex items-center">
             <input
@@ -96,95 +104,95 @@ const Navbar = () => {
               placeholder="Search products..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className={`absolute right-0 w-64 pl-3 pr-10 py-2 text-sm text-[#ecc153] bg-transparent outline-none border-b-2 border-l-2 border-[#ecc153]
+              className={`absolute right-8 w-60 sm:w-72 pl-4 pr-10 py-2.5 text-sm text-[#082e21] bg-white outline-none border border-[#082e21]/20 rounded-full shadow-sm placeholder:text-[#082e21]/40
               transition-all duration-300 ease-in-out
               ${
                 showSearch
                   ? "opacity-100 translate-x-0"
-                  : "opacity-0 translate-x-10 pointer-events-none"
+                  : "opacity-0 translate-x-4 pointer-events-none"
               }`}
             />
-
-            <img
-              src={assets.search_icon}
-              alt="search"
+            <button 
               onClick={() => setShowSearch(!showSearch)}
-              className="w-5 cursor-pointer brightness-0 invert sepia saturate-[1000%] hue-rotate-[5deg]"
-            />
+              className="p-1.5 hover:bg-[#082e21]/5 rounded-full transition-colors duration-300 z-10"
+            >
+              <LuSearch className="w-[22px] h-[22px] cursor-pointer transition-transform duration-300 hover:scale-110" />
+            </button>
           </div>
 
           {/* SEARCH RESULT */}
           {showSearch && search && (
-            <div className="absolute top-12 left-0 right-0 bg-white shadow-lg z-40 max-h-80 overflow-y-auto rounded-md">
+            <div className="absolute top-16 right-1/2 translate-x-1/2 w-[350px] bg-white shadow-[0_15px_40px_rgba(0,0,0,0.1)] border border-gray-100 z-40 max-h-[400px] overflow-y-auto rounded-2xl py-2 custom-scrollbar">
               {searchProducts.length > 0 ? (
-                searchProducts.map((item) => (
+                searchProducts.map((item) => {
+                  let imgSrc = Array.isArray(item.image) ? item.image[0] : item.image;
+                  if (typeof imgSrc === 'string' && !imgSrc.startsWith("http") && !imgSrc.startsWith("/") && !imgSrc.startsWith("data:")) {
+                    imgSrc = `http://localhost:5000/uploads/${imgSrc}`;
+                  }
+                  return (
                   <Link
                     to={`/product/${item._id}`}
                     key={item._id}
-                    className="flex items-center gap-4 p-3 hover:bg-gray-100"
+                    className="flex items-center gap-4 px-5 py-3 hover:bg-[#082e21]/5 transition-colors duration-200"
                     onClick={() => {
                       setShowSearch(false);
                       setSearch("");
                     }}
                   >
-                    <img
-                      src={item.image[0]}
-                      alt={item.name}
-                      className="w-10 h-10 object-cover"
-                    />
-                    <p className="text-sm">{item.name}</p>
+                    <div className="w-14 h-14 rounded-lg overflow-hidden shrink-0 border border-gray-100 bg-gray-50">
+                      <img
+                        src={imgSrc}
+                        alt={item.name}
+                        className="w-full h-full object-cover mix-blend-multiply"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <p className="text-sm font-semibold text-[#082e21] line-clamp-1">{item.name}</p>
+                      <p className="text-xs text-[#082e21]/70 font-bold mt-1">₹{item.price}</p>
+                    </div>
                   </Link>
-                ))
+                )})
               ) : (
-                <p className="p-4 text-gray-500 text-sm text-center">
-                  No product found
-                </p>
+                <div className="p-8 text-[#082e21]/50 text-sm text-center flex flex-col items-center gap-3">
+                  <LuSearch className="w-8 h-8 opacity-40" />
+                  <p>No products found</p>
+                </div>
               )}
             </div>
           )}
 
           {/* Wishlist */}
-          <Link to="/wishlist" className="relative">
-            <img
-              src={assets.wishlist_icon}
-              alt="wishlist"
-              className="w-5 cursor-pointer brightness-0 invert sepia saturate-[1000%] hue-rotate-[5deg]"
-            />
-            <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-[#ecc153] text-[#082e21] aspect-square rounded-full text-[8px] font-semibold">
-              {wishlistCount}
-            </p>
+          <Link to="/wishlist" className="relative p-1.5 hover:bg-[#082e21]/5 rounded-full transition-colors duration-300">
+            <LuHeart className="w-[22px] h-[22px] cursor-pointer transition-transform duration-300 hover:scale-110" />
+            {wishlistCount > 0 && (
+              <span className="absolute right-0 top-0 w-4 h-4 flex items-center justify-center bg-[#082e21] text-white rounded-full text-[10px] font-bold shadow-sm border border-white">
+                {wishlistCount}
+              </span>
+            )}
           </Link>
 
           {/* Profile */}
-          <Link to="/profile" className="relative group">
-            <img
-              src={assets.profile_icon}
-              alt="profile"
-              className="w-5 cursor-pointer brightness-0 invert sepia saturate-[1000%] hue-rotate-[5deg] transition-transform duration-300 group-hover:scale-110"
-            />
+          <Link to="/profile" className="relative group p-1.5 hover:bg-[#082e21]/5 rounded-full transition-colors duration-300 hidden sm:block">
+            <LuUser className="w-[22px] h-[22px] cursor-pointer transition-transform duration-300 hover:scale-110" />
           </Link>
 
           {/* Cart */}
-          <Link to="/cart" className="relative">
-            <img
-              src={assets.cart_icon}
-              alt="cart"
-              className="w-5 cursor-pointer brightness-0 invert sepia saturate-[1000%] hue-rotate-[5deg]"
-            />
-
-            <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-[#ecc153] text-[#082e21] aspect-square rounded-full text-[8px] font-semibold">
-              {cartCount}
-            </p>
+          <Link to="/cart" className="relative p-1.5 hover:bg-[#082e21]/5 rounded-full transition-colors duration-300">
+            <LuShoppingCart className="w-[22px] h-[22px] cursor-pointer transition-transform duration-300 hover:scale-110" />
+            {cartCount > 0 && (
+              <span className="absolute right-0 top-0 w-4 h-4 flex items-center justify-center bg-[#082e21] text-white rounded-full text-[10px] font-bold shadow-sm border border-white">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
-          {/* Mobile Menu */}
-          <img
+          {/* Mobile Menu Toggle */}
+          <button 
             onClick={() => setVisible(true)}
-            src={assets.menu_icon}
-            className="w-5 cursor-pointer sm:hidden"
-            alt="menu"
-          />
-
+            className="md:hidden p-1.5 hover:bg-[#082e21]/5 rounded-full transition-colors duration-300"
+          >
+            <LuMenu className="w-[24px] h-[24px] cursor-pointer" />
+          </button>
         </div>
       </div>
     </div>

@@ -63,8 +63,8 @@ const Trending = () => {
 
   if (loading) {
     return (
-      <section className="w-full py-10 text-center">
-        <p className="text-gray-400 animate-pulse">Loading...</p>
+      <section className="w-full py-10 text-center bg-white">
+        <p className="text-[#082e21] animate-pulse font-medium">Loading Trending Items...</p>
       </section>
     );
   }
@@ -74,16 +74,16 @@ const Trending = () => {
   const displayItems = [...items, ...items, ...items, ...items];
 
   return (
-    <section className="w-full py-[5px] bg-white relative overflow-hidden">
+    <section className="w-full py-0 bg-white relative overflow-hidden border-t border-[#082e21]/5">
 
-      {/* 🔥 Glow Effects */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#ecc153] rounded-full blur-[100px] opacity-10 pointer-events-none"></div>
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#ecc153] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+      {/* 🔥 Subtle Background Accents */}
+      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-[#082e21] rounded-full blur-[150px] opacity-[0.02] pointer-events-none"></div>
+      <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-[#082e21] rounded-full blur-[150px] opacity-[0.03] pointer-events-none"></div>
 
-      <div className="relative z-10 w-full overflow-hidden">
+      <div className="relative z-10 w-full overflow-hidden px-4 md:px-8">
         <div
           ref={sliderRef}
-          className="flex gap-10 overflow-x-hidden cursor-grab active:cursor-grabbing"
+          className="flex gap-6 sm:gap-10 overflow-x-hidden cursor-grab active:cursor-grabbing pb-4 pt-2"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
@@ -93,32 +93,40 @@ const Trending = () => {
             <div
               key={`${item._id}-${index}`}
               onClick={() => navigate("/collection")}
-              className="flex-shrink-0 group py-1"
+              className="flex-shrink-0 group flex flex-col items-center gap-2 py-1"
             >
-              {/* 🔥 CIRCLE CARD */}
-              <div className="relative w-[120px] h-[120px] sm:w-[140px] sm:h-[140px]">
+              {/* 🔥 PREMIUM CIRCLE CARD */}
+              <div className="relative w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] rounded-full bg-white shadow-[0_8px_30px_rgba(0,0,0,0.03)] group-hover:shadow-[0_15px_40px_rgba(8,46,33,0.15)] transition-all duration-500 ease-out">
 
-                {/* Ring */}
-                <div className="absolute inset-0 rounded-full p-[2px] bg-[#ecc153] opacity-70 group-hover:opacity-100 transition duration-500 shadow-[0_0_15px_rgba(236,193,83,0.3)]">
-                  <div className="w-full h-full rounded-full bg-white"></div>
+                {/* Border Ring */}
+                <div className="absolute inset-0 rounded-full border-[1.5px] border-[#082e21]/20 group-hover:border-[#082e21] scale-100 group-hover:scale-105 transition-all duration-500 z-20 pointer-events-none"></div>
+
+                {/* Inner White BG to ensure border separates */}
+                <div className="absolute inset-[4px] sm:inset-[5px] rounded-full bg-white z-0 overflow-hidden shadow-inner">
+                  {/* IMAGE */}
+                  <img
+                    src={
+                      item.image.startsWith("http") || item.image.startsWith("/")
+                        ? item.image
+                        : `${UPLOADS_URL}/${item.image}`
+                    }
+                    alt={item.name || "Trending Saree"}
+                    className="w-full h-full object-cover rounded-full z-10 
+                    group-hover:scale-110 transition-transform duration-700 ease-out"
+                  />
                 </div>
 
-                {/* IMAGE */}
-                <img
-                  src={
-                    item.image.startsWith("http")
-                      ? item.image
-                      : `${UPLOADS_URL}/${item.image}`
-                  }
-                  alt=""
-                  className="absolute inset-[4px] w-[calc(100%-8px)] h-[calc(100%-8px)] object-cover rounded-full z-10 
-                  group-hover:scale-110 transition duration-500 ease-out shadow-sm"
-                />
-
-                {/* Glow */}
-                <div className="absolute inset-0 rounded-full bg-[#ecc153] opacity-0 blur-2xl group-hover:opacity-20 group-hover:scale-125 transition duration-500"></div>
+                {/* Subtle dark overlay on hover */}
+                <div className="absolute inset-[4px] sm:inset-[5px] rounded-full bg-[#082e21]/0 group-hover:bg-[#082e21]/10 transition-colors duration-500 z-10 pointer-events-none"></div>
 
               </div>
+              
+              {/* Optional: Title under the image for a more complete look */}
+              {item.name && (
+                <p className="text-[10px] sm:text-xs font-semibold text-[#082e21] opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-1 group-hover:translate-y-0 text-center w-[90px] sm:w-[120px] truncate">
+                  {item.name}
+                </p>
+              )}
             </div>
           ))}
         </div>

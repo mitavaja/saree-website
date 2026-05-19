@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { ShopContext } from "../context/ShopContext";
 import ProductItem from "../components/ProductItem";
 import Footer from "../components/Footer";
-import { motion, AnimatePresence } from "framer-motion";
 
 const Collection = () => {
   const { products } = useContext(ShopContext);
@@ -135,8 +134,6 @@ const Collection = () => {
       <div className="w-full h-64 md:h-80 bg-gradient-to-r from-[#082e21] via-[#0b3d2c] to-[#082e21] relative overflow-hidden flex items-center justify-center shadow-2xl">
         {/* Decor */}
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#ecc153] rounded-full blur-[100px] opacity-10 pointer-events-none"></div>
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#ecc153] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
         
         <div className="relative z-10 text-center px-6">
           <span className="text-[#ecc153] uppercase tracking-[0.4em] text-sm font-bold mb-4 block">Premium Heritage</span>
@@ -150,7 +147,7 @@ const Collection = () => {
       <div className="w-full px-6 lg:px-12 py-12 md:py-20">
         
         {/* Mobile Filter Toggle */}
-        <div className="md:hidden flex justify-between items-center mb-10 bg-[#082e21]/5 p-6 rounded-[2rem] border border-[#082e21]/10 backdrop-blur-sm">
+        <div className="md:hidden flex justify-between items-center mb-10 bg-[#082e21]/5 p-6 rounded-[2rem] border border-[#082e21]/10">
           <div className="flex flex-col">
             <p className="text-[#082e21] font-serif text-xl">Filters</p>
             <p className="text-gray-500 text-xs uppercase tracking-widest">{filteredProducts.length} items found</p>
@@ -179,11 +176,7 @@ const Collection = () => {
             </div>
 
             {filteredProducts.length === 0 ? (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                className="flex flex-col items-center justify-center py-32 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200"
-              >
+              <div className="flex flex-col items-center justify-center py-32 bg-gray-50 rounded-[3rem] border-2 border-dashed border-gray-200">
                 <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-xl mb-8">
                   <span className="text-4xl">🔍</span>
                 </div>
@@ -195,61 +188,39 @@ const Collection = () => {
                 >
                   Reset All Filters
                 </button>
-              </motion.div>
+              </div>
             ) : (
-              <motion.div 
-                layout
-                className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10"
-              >
-                <AnimatePresence mode="popLayout">
+              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10">
                   {filteredProducts.map((item) => (
-                    <motion.div
-                      key={item._id}
-                      layout
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="h-full"
-                    >
+                    <div key={item._id} className="h-full">
                       <ProductItem
                         id={item._id}
                         image={item.image}
                         name={item.name}
                         price={item.price}
                       />
-                    </motion.div>
+                    </div>
                   ))}
-                </AnimatePresence>
-              </motion.div>
+              </div>
             )}
           </div>
         </div>
       </div>
 
       {/* Mobile Filter Drawer */}
-      <AnimatePresence>
-        {openFilter && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[1000] bg-[#082e21]/60 backdrop-blur-md"
-              onClick={() => setOpenFilter(false)}
-            />
-            <motion.div 
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 right-0 z-[1001] w-full max-w-[400px] shadow-[-20px_0_50px_rgba(0,0,0,0.5)]"
-            >
-              <FilterContent isMobile={true} />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {openFilter && (
+        <>
+          <div 
+            className="fixed inset-0 z-[1000] bg-[#082e21]/80"
+            onClick={() => setOpenFilter(false)}
+          />
+          <div 
+            className="fixed inset-y-0 right-0 z-[1001] w-full max-w-[400px] shadow-[-20px_0_50px_rgba(0,0,0,0.5)] bg-white animate-slide-in-right"
+          >
+            <FilterContent isMobile={true} />
+          </div>
+        </>
+      )}
 
       <Footer />
     </div>

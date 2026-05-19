@@ -1,25 +1,27 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
+import { ShopContext } from '../context/ShopContext'
 
 const Login = () => {
-  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
-  const [step, setStep] = useState(1) // 1: phone, 2: otp
+  const [step, setStep] = useState(1) // 1: email, 2: otp
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const { sendOtp, verifyOtp } = useContext(AuthContext)
+  const { setToken } = useContext(ShopContext)
   const navigate = useNavigate()
 
   const handleSendOtp = async () => {
-    if (!phone || phone.length < 10) {
-      setError('Please enter a valid 10-digit phone number')
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError('Please enter a valid email address')
       return
     }
     setLoading(true)
     setError('')
-    const res = await sendOtp(phone)
+    const res = await sendOtp(email)
     if (res.success) {
       setStep(2)
     } else {
@@ -35,8 +37,9 @@ const Login = () => {
     }
     setLoading(true)
     setError('')
-    const res = await verifyOtp(phone, otp)
+    const res = await verifyOtp(email, otp)
     if (res.success) {
+      setToken(res.token)
       navigate('/')
     } else {
       setError(res.error || 'Invalid OTP')
@@ -48,7 +51,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">Sign in</h2>
+          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">Login</h2>
         </div>
         <div className="bg-white p-8 rounded-lg shadow-md">
           {error && (
@@ -59,13 +62,13 @@ const Login = () => {
           {step === 1 ? (
             <>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                 <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  placeholder="Enter 10-digit phone"
+                  placeholder="Enter your email"
                 />
               </div>
               <button
@@ -94,7 +97,7 @@ const Login = () => {
                   onClick={() => setStep(1)}
                   className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400"
                 >
-                  Change Phone
+                  Change Email
                 </button>
                 <button
                   onClick={handleVerifyOtp}

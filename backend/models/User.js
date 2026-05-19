@@ -5,7 +5,9 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String },
   phone: { type: String, default: "" },
-  address: { type: String, default: "" }
+  address: { type: String, default: "" },
+  otp: { type: String },
+  otpExpiry: { type: Date }
 });
 
 const userModel = mongoose.model("user", userSchema);
