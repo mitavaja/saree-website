@@ -132,7 +132,7 @@ axios.get(`${API}/policy/terms`)
   const handleSave = async () => {
     setLoading(true);
     try {
-      await axios.post(`${API}/policy/privacy`, {
+      await axios.post(`${API}/policy/terms`, {
         content: editor.getHTML(),
       });
       toast.success("Saved ✅");
@@ -146,7 +146,7 @@ axios.get(`${API}/policy/terms`)
   const handleDelete = async () => {
     setLoading(true);
     try {
-axios.post(`${API}/policy/terms`, { content })
+      await axios.post(`${API}/policy/terms`, { content: "" });
       editor.commands.setContent("");
       toast.success("Deleted ✅");
     } catch {

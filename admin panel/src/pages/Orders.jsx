@@ -18,6 +18,18 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orders, setOrders] = useState([]);
   
+  const getProductImage = (image) => {
+    if (!image) return "/no-image.png";
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
+    }
+    if (image.startsWith("/uploads/") || image.startsWith("uploads/")) {
+      const cleanPath = image.startsWith("/") ? image : `/${image}`;
+      return `http://localhost:5000${cleanPath}`;
+    }
+    return `http://localhost:5000/uploads/${image}`;
+  };
+  
   // New states for Bulk Invoice Download
   const [invoiceStartDate, setInvoiceStartDate] = useState("");
   const [invoiceEndDate, setInvoiceEndDate] = useState("");
@@ -481,7 +493,7 @@ const Orders = () => {
                       <tr key={i} className="border-t">
                         <td className="p-2 flex items-center gap-2">
                           <img
-                            src={item.image || "/no-image.png"}
+                            src={getProductImage(item.image)}
                             className="w-8 h-8 object-cover rounded"
                             onError={(e) => (e.target.src = "/no-image.png")}
                           />

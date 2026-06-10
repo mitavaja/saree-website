@@ -146,21 +146,37 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex flex-col md:flex-row items-center gap-16">
             <div className="w-full md:w-1/2">
-              <span className="text-[#ecc153] uppercase tracking-[0.3em] text-sm font-bold mb-4 block">Modern Innovation</span>
+              <span className="text-[#ecc153] uppercase tracking-[0.3em] text-sm font-bold mb-4 block">
+                {data?.redefineSubtitle || "Modern Innovation"}
+              </span>
               <h2 className="text-4xl md:text-6xl font-serif text-[#082e21] mb-8 leading-tight">
-                Redefining <span className="text-[#ecc153] italic">Saree Fashion</span>
+                {data?.redefineTitle ? (
+                  data.redefineTitle.split(" ").map((word, idx) => (
+                    <span key={idx} className={idx % 2 !== 0 ? "text-[#ecc153] italic" : ""}>{word} </span>
+                  ))
+                ) : (
+                  <>Redefining <span className="text-[#ecc153] italic">Saree Fashion</span></>
+                )}
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                We believe that tradition should evolve with time. Our designs seamlessly blend ancient weaving techniques with contemporary aesthetics, creating masterpieces that resonate with the modern woman while honoring her heritage.
+                {data?.redefineDesc || "We believe that tradition should evolve with time. Our designs seamlessly blend ancient weaving techniques with contemporary aesthetics, creating masterpieces that resonate with the modern woman while honoring her heritage."}
               </p>
               <div className="grid grid-cols-2 gap-8">
                 <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                  <h4 className="text-[#082e21] font-bold text-3xl mb-1">150+</h4>
-                  <p className="text-gray-500 text-sm">Unique Patterns</p>
+                  <h4 className="text-[#082e21] font-bold text-3xl mb-1">
+                    {data?.stat1Val || "150+"}
+                  </h4>
+                  <p className="text-gray-500 text-sm">
+                    {data?.stat1Text || "Unique Patterns"}
+                  </p>
                 </div>
                 <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                  <h4 className="text-[#082e21] font-bold text-3xl mb-1">20k+</h4>
-                  <p className="text-gray-500 text-sm">Happy Brides</p>
+                  <h4 className="text-[#082e21] font-bold text-3xl mb-1">
+                    {data?.stat2Val || "20k+"}
+                  </h4>
+                  <p className="text-gray-500 text-sm">
+                    {data?.stat2Text || "Happy Brides"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -168,7 +184,11 @@ const About = () => {
               <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#ecc153]/10 rounded-full blur-3xl"></div>
               <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80" 
+                  src={
+                    data?.redefineImage 
+                      ? `http://localhost:5000${data.redefineImage}` 
+                      : "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80"
+                  } 
                   alt="Modern Saree" 
                   className="w-full h-[600px] object-cover transition-transform duration-700 hover:scale-105"
                 />

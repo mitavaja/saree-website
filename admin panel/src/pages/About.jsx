@@ -10,6 +10,13 @@ const About = () => {
     storyDesc1: "",
     storyDesc2: "",
     bannerText: "",
+    redefineSubtitle: "",
+    redefineTitle: "",
+    redefineDesc: "",
+    stat1Val: "",
+    stat1Text: "",
+    stat2Val: "",
+    stat2Text: "",
     whyTitle: "",
     whyItems: [
       { title: "", description: "" },
@@ -18,8 +25,10 @@ const About = () => {
     ]
   });
 
-  const [image, setImage] = useState(null); // ✅ new
-  const [preview, setPreview] = useState(""); // ✅ preview
+  const [image, setImage] = useState(null); // Story Image
+  const [preview, setPreview] = useState(""); // Preview Story Image
+  const [redefineImage, setRedefineImage] = useState(null); // Redefining Saree Image
+  const [redefinePreview, setRedefinePreview] = useState(""); // Preview Redefining Image
 
   useEffect(() => {
     fetchData();
@@ -39,11 +48,30 @@ const About = () => {
         ];
       }
 
-      setForm(fetched);
+      setForm({
+        heroTitle: fetched.heroTitle || "",
+        heroSubtitle: fetched.heroSubtitle || "",
+        storyTitle: fetched.storyTitle || "",
+        storyDesc1: fetched.storyDesc1 || "",
+        storyDesc2: fetched.storyDesc2 || "",
+        bannerText: fetched.bannerText || "",
+        redefineSubtitle: fetched.redefineSubtitle || "",
+        redefineTitle: fetched.redefineTitle || "",
+        redefineDesc: fetched.redefineDesc || "",
+        stat1Val: fetched.stat1Val || "",
+        stat1Text: fetched.stat1Text || "",
+        stat2Val: fetched.stat2Val || "",
+        stat2Text: fetched.stat2Text || "",
+        whyTitle: fetched.whyTitle || "",
+        whyItems: fetched.whyItems
+      });
 
       // 👇 existing image preview
       if (fetched.storyImage) {
         setPreview(`http://localhost:5000${fetched.storyImage}`);
+      }
+      if (fetched.redefineImage) {
+        setRedefinePreview(`http://localhost:5000${fetched.redefineImage}`);
       }
     }
   };
@@ -74,12 +102,15 @@ const About = () => {
         if (key === "whyItems") {
           formData.append("whyItems", JSON.stringify(form.whyItems));
         } else {
-          formData.append(key, form[key]);
+          formData.append(key, form[key] || "");
         }
       });
 
       if (image) {
         formData.append("storyImage", image);
+      }
+      if (redefineImage) {
+        formData.append("redefineImage", redefineImage);
       }
 
       await axios.post("/about/save", formData, {
@@ -137,6 +168,52 @@ const About = () => {
         <div className="bg-white p-6 rounded-2xl shadow">
           <h2 className="font-semibold mb-4">Banner Section</h2>
           <input name="bannerText" value={form.bannerText} onChange={handleChange} placeholder="Banner Text" className="inputStyle" />
+        </div>
+
+        {/* REDEFINING SAREE FASHION */}
+        <div className="bg-white p-6 rounded-2xl shadow">
+          <h2 className="font-semibold mb-4">Redefining Saree Fashion Section</h2>
+
+          <div className="grid md:grid-cols-2 gap-4 mb-3">
+            <div>
+              <label className="block text-sm font-semibold mb-1 text-gray-700">Subtitle</label>
+              <input name="redefineSubtitle" value={form.redefineSubtitle} onChange={handleChange} placeholder="e.g. Modern Innovation" className="inputStyle" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-1 text-gray-700">Title</label>
+              <input name="redefineTitle" value={form.redefineTitle} onChange={handleChange} placeholder="e.g. Redefining Saree Fashion" className="inputStyle" />
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <label className="block text-sm font-semibold mb-1 text-gray-700">Description</label>
+            <textarea name="redefineDesc" value={form.redefineDesc} onChange={handleChange} placeholder="Description text" className="inputStyle h-24" />
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-gray-50 p-4 rounded-xl border">
+              <h3 className="font-semibold mb-2 text-sm text-[#082e21]">Stat 1</h3>
+              <input name="stat1Val" value={form.stat1Val} onChange={handleChange} placeholder="Value (e.g. 150+)" className="inputStyle mb-2" />
+              <input name="stat1Text" value={form.stat1Text} onChange={handleChange} placeholder="Label (e.g. Unique Patterns)" className="inputStyle" />
+            </div>
+            <div className="bg-gray-50 p-4 rounded-xl border">
+              <h3 className="font-semibold mb-2 text-sm text-[#082e21]">Stat 2</h3>
+              <input name="stat2Val" value={form.stat2Val} onChange={handleChange} placeholder="Value (e.g. 20k+)" className="inputStyle mb-2" />
+              <input name="stat2Text" value={form.stat2Text} onChange={handleChange} placeholder="Label (e.g. Happy Brides)" className="inputStyle" />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold mb-1 text-gray-700">Section Image</label>
+            <input type="file" onChange={(e) => {
+              const file = e.target.files[0];
+              setRedefineImage(file);
+              setRedefinePreview(URL.createObjectURL(file));
+            }} className="inputStyle" />
+            {redefinePreview && (
+              <img src={redefinePreview} className="w-40 h-40 object-cover mt-3 rounded-lg border" />
+            )}
+          </div>
         </div>
 
         {/* WHY */}

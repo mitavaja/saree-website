@@ -146,7 +146,7 @@ const Return = () => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await axios.post(`${API}/policy/privacy`, { content: "" });
+      await axios.post(`${API}/policy/return`, { content: "" });
       editor.commands.setContent("");
       toast.success("Deleted ✅");
     } catch {

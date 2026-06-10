@@ -19,6 +19,16 @@ const aboutSchema = new mongoose.Schema({
     }
   ],
 
+  // ✅ REDEFINING SAREE FASHION (DYNAMIC)
+  redefineSubtitle: String,
+  redefineTitle: String,
+  redefineDesc: String,
+  stat1Val: String,
+  stat1Text: String,
+  stat2Val: String,
+  stat2Text: String,
+  redefineImage: String,
+
   createdAt: {
     type: Date,
     default: Date.now

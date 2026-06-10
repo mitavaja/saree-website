@@ -13,16 +13,26 @@ export const saveAbout = async (req, res) => {
   try {
     let about = await About.findOne();
 
-    let imagePath = about?.storyImage || "";
+    let storyImagePath = about?.storyImage || "";
+    let redefineImagePath = about?.redefineImage || "";
 
-    // 👇 agar new image upload hui
-    if (req.file) {
-      imagePath = `/uploads/${req.file.filename}`;
+    // Handle uploaded files from upload.fields
+    if (req.files) {
+      if (req.files.storyImage && req.files.storyImage[0]) {
+        storyImagePath = `/uploads/${req.files.storyImage[0].filename}`;
+      }
+      if (req.files.redefineImage && req.files.redefineImage[0]) {
+        redefineImagePath = `/uploads/${req.files.redefineImage[0].filename}`;
+      }
+    } else if (req.file) {
+      // Fallback for upload.single
+      storyImagePath = `/uploads/${req.file.filename}`;
     }
 
     const updatedData = {
       ...req.body,
-      storyImage: imagePath,
+      storyImage: storyImagePath,
+      redefineImage: redefineImagePath,
       whyItems: JSON.parse(req.body.whyItems || "[]")
     };
 

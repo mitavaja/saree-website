@@ -1,16 +1,27 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import ProductItem from "../components/ProductItem";
 import Footer from "../components/Footer";
 
 const Collection = () => {
   const { products } = useContext(ShopContext);
+  const [searchParams] = useSearchParams();
+  const categoryParam = searchParams.get("category");
 
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState(categoryParam || "All");
   const [color, setColor] = useState("All");
   const [priceRange, setPriceRange] = useState(10000);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [openFilter, setOpenFilter] = useState(false);
+
+  useEffect(() => {
+    if (categoryParam) {
+      setCategory(categoryParam);
+    } else {
+      setCategory("All");
+    }
+  }, [categoryParam]);
 
   const categories = ["All", ...new Set(products.map((item) => item.category))];
   const colors = ["All", ...new Set(products.map((item) => item.color))];

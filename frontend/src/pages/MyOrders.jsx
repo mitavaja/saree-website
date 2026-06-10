@@ -11,6 +11,18 @@ const MyOrders = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const getProductImage = (image) => {
+    if (!image) return "https://via.placeholder.com/150";
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
+    }
+    if (image.startsWith("/uploads/") || image.startsWith("uploads/")) {
+      const cleanPath = image.startsWith("/") ? image : `/${image}`;
+      return `http://localhost:5000${cleanPath}`;
+    }
+    return `http://localhost:5000/uploads/${image}`;
+  };
+
   useEffect(() => {
     if (token) {
       fetchUserOrders().finally(() => setLoading(false));
@@ -30,9 +42,10 @@ const MyOrders = () => {
 
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
+      case "pending": return "bg-yellow-100 text-yellow-700";
       case "order placed": return "bg-blue-100 text-blue-700";
       case "processing": return "bg-orange-100 text-orange-700";
-      case "shipped": return "bg-yellow-100 text-yellow-700";
+      case "shipped": return "bg-blue-100 text-blue-700";
       case "out for delivery": return "bg-indigo-100 text-indigo-700";
       case "delivered": return "bg-green-100 text-green-700";
       case "cancelled": return "bg-red-100 text-red-700";
@@ -43,7 +56,7 @@ const MyOrders = () => {
   const getStatusStep = (status) => {
     const s = status?.toLowerCase() || "";
     if (s === "cancelled") return -1;
-    if (s.includes("placed")) return 1;
+    if (s.includes("pending") || s.includes("placed")) return 1;
     if (s.includes("process")) return 2;
     if (s.includes("ship")) return 3;
     if (s.includes("out")) return 4;
@@ -119,7 +132,7 @@ const MyOrders = () => {
           {order.items.map((item, index) => (
             <div key={`${item.productId}-${index}`} className="flex items-center gap-4 bg-gray-50 hover:bg-gray-100 transition-colors p-4 rounded-2xl border border-gray-100">
               <div className="w-20 h-20 rounded-xl bg-white overflow-hidden shadow-sm flex-shrink-0">
-                <img src={item.image || "https://via.placeholder.com/150"} alt={item.name} className="w-full h-full object-cover" />
+                <img src={getProductImage(item.image)} alt={item.name} className="w-full h-full object-cover" />
               </div>
               <div className="flex-1">
                 <p className="text-sm font-semibold text-gray-800 line-clamp-2">{item.name}</p>
@@ -180,7 +193,13 @@ const MyOrders = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className="absolute top-1/2 right-10 w-64 h-64 bg-[#ecc153] rounded-full blur-[80px] opacity-20 pointer-events-none -translate-y-1/2"></div>
         
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-12 relative z-10">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-12 relative z-10 flex flex-col gap-1 items-start">
+          <button 
+            onClick={() => navigate(-1)} 
+            className="flex items-center gap-2 text-[#ecc153] hover:text-white transition-colors text-sm font-semibold mb-2 bg-[#082e21]/40 px-3 py-1.5 rounded-lg border border-[#ecc153]/20"
+          >
+            ← Back
+          </button>
           <h1 className="text-4xl md:text-5xl font-serif text-white mb-2">My <span className="text-[#ecc153]">Orders</span></h1>
           <p className="text-white/80 font-medium">Track, manage and view all your premium saree purchases.</p>
         </div>

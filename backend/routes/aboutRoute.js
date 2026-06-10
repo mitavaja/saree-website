@@ -6,7 +6,10 @@ const router = express.Router();
 
 router.get("/", getAbout);
 
-// 👇 image upload included
-router.post("/save", upload.single("storyImage"), saveAbout);
+// 👇 multiple image uploads included
+router.post("/save", upload.fields([
+  { name: "storyImage", maxCount: 1 },
+  { name: "redefineImage", maxCount: 1 }
+]), saveAbout);
 
 export default router;

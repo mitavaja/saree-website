@@ -446,7 +446,7 @@ const handleSingleThumbnail = (file, index) => {
               previewImages.filter(Boolean).length < 3 ||
               !previewVideo
             ) {
-              alert("Please fill all required fields!");
+              toast.error("Please fill all required fields!");
               return;
             }
 

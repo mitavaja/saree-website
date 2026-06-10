@@ -89,7 +89,9 @@ const Footer = () => {
               <ul className="text-sm text-gray-200 space-y-2">
                 {data.categories?.map((item, i) => (
                   <li key={i} className="hover:text-white hover:translate-x-1 transition-all cursor-pointer">
-                    {item}
+                    <Link to={`/collection?category=${encodeURIComponent(item)}`} className="block w-full h-full">
+                      {item}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -117,7 +119,6 @@ const Footer = () => {
                 <li><Link to="/terms-conditions">Terms & Conditions</Link></li>
                 <li><Link to="/return-policy">Return Policy</Link></li>
                 <li><Link to="/shipping-policy">Shipping Policy</Link></li>
-                <li>Track Order</li>
               </ul>
             </div>
 
