@@ -31,14 +31,14 @@ const BrandStorySection = () => {
     : `http://localhost:5000/uploads/${data.video}`;
 
   return (
-    <section className="w-full bg-[#082e21] relative overflow-hidden py-24 my-10 rounded-[3rem] shadow-2xl mx-auto max-w-[95%] lg:max-w-7xl">
+    <section className="w-full bg-[#082e21] relative overflow-hidden py-10 sm:py-16 md:py-24 my-10 rounded-2xl sm:rounded-[3rem] shadow-2xl mx-auto max-w-[95%] lg:max-w-7xl">
       {/* Texture & Glow */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecc153] rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#ecc153] rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
 
       <div className="px-6 lg:px-12 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
           
           {/* LEFT - VIDEO */}
           <motion.div 
@@ -46,7 +46,7 @@ const BrandStorySection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative w-full h-[400px] md:h-[550px] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-[#ecc153]/20 group"
+            className="relative w-full h-[250px] sm:h-[400px] md:h-[550px] rounded-2xl sm:rounded-[3rem] overflow-hidden shadow-2xl border-4 border-[#ecc153]/20 group"
           >
             {/* Subtle overlay for premium feel */}
             <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
@@ -83,14 +83,14 @@ const BrandStorySection = () => {
               <span className="text-[#ecc153] text-sm font-bold tracking-[0.3em] uppercase">Our Story</span>
             </div>
 
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-8 leading-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-4 sm:mb-6 md:mb-8 leading-tight">
               {data.title}
             </h2>
 
-            <div className="space-y-6 text-gray-300 text-lg leading-relaxed mb-10">
+            <div className="space-y-4 sm:space-y-6 text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-10">
               {data.desc1 && <p>{data.desc1}</p>}
               {data.desc2 && (
-                <p className="text-white/80 italic border-l-4 border-[#ecc153] pl-6 py-2 my-8 font-medium">
+                <p className="text-white/80 italic border-l-4 border-[#ecc153] pl-4 sm:pl-6 py-1 sm:py-2 my-4 sm:my-8 font-medium">
                   "{data.desc2}"
                 </p>
               )}
@@ -101,7 +101,7 @@ const BrandStorySection = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/about")}
-              className="w-fit px-10 py-4 bg-[#ecc153] text-[#082e21] font-bold tracking-widest uppercase rounded-full shadow-[0_0_20px_rgba(236,193,83,0.3)] hover:bg-white transition-all duration-300"
+              className="w-fit px-6 py-3 sm:px-10 sm:py-4 bg-[#ecc153] text-[#082e21] font-bold tracking-widest uppercase rounded-full shadow-[0_0_20px_rgba(236,193,83,0.3)] hover:bg-white transition-all duration-300 text-sm sm:text-base"
             >
               {data.buttonText || "Know More"}
             </motion.button>

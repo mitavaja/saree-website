@@ -80,8 +80,8 @@ const Contact = () => {
       </div>
 
       {/* CONTACT SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-24">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 md:py-24">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           
           {/* LEFT INFO */}
           <motion.div
@@ -92,7 +92,7 @@ const Contact = () => {
             className="h-full flex flex-col justify-center"
           >
             <h2 className="text-sm font-bold text-gray-400 uppercase tracking-[0.3em] mb-3">Get in Touch</h2>
-            <h3 className="text-4xl md:text-5xl font-serif text-[#082e21] mb-12">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#082e21] mb-6 md:mb-12">
               We're Here to Help
             </h3>
 
@@ -157,7 +157,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="bg-white rounded-[3rem] p-10 md:p-14 shadow-2xl border border-gray-100 relative"
+            className="bg-white rounded-2xl md:rounded-[3rem] p-6 sm:p-10 md:p-14 shadow-2xl border border-gray-100 relative"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#ecc153] to-transparent opacity-20 rounded-tr-[3rem] pointer-events-none"></div>
             
@@ -215,7 +215,7 @@ const Contact = () => {
       </div>
 
       {/* MAP SECTION */}
-      <div className="py-24 px-4 sm:px-6 lg:px-12 bg-white">
+      <div className="py-12 md:py-24 px-4 sm:px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-sm font-bold text-gray-400 uppercase tracking-[0.3em] mb-3">Location</h2>
@@ -228,11 +228,11 @@ const Contact = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="rounded-[3rem] overflow-hidden shadow-2xl border-4 border-gray-50"
+            className="rounded-2xl md:rounded-[3rem] overflow-hidden shadow-2xl border-4 border-gray-50"
           >
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.5905730378654!2d72.84761112471921!3d21.208417531584757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04efdd3fb93d9%3A0x7427f2b33ccc2cfe!2sLaxman%20Nagar%2C%20Varachha%2C%20Surat%2C%20Gujarat%20395006!5e0!3m2!1sen!2sin!4v1772686401114!5m2!1sen!2sin"
-              className="w-full h-[500px] border-0"
+              className="w-full h-[300px] sm:h-[450px] md:h-[500px] border-0"
               allowFullScreen
               loading="lazy"
               title="Surat Location"

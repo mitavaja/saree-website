@@ -5,7 +5,17 @@ const VideoGallery = () => {
   const [videos, setVideos] = useState([]);
   const videoRefs = useRef([]);
   const [current, setCurrent] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const visibleVideos = 5;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -29,7 +39,7 @@ const VideoGallery = () => {
   };
 
   return (
-    <section className="w-full h-[100vh] flex flex-col justify-center m-0 p-0 relative bg-[#082e21] overflow-hidden">
+    <section className="w-full min-h-screen py-10 sm:py-16 md:py-0 md:h-screen flex flex-col justify-center m-0 p-0 relative bg-[#082e21] overflow-hidden">
       
       {/* Premium Decorative Elements */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
@@ -37,13 +47,13 @@ const VideoGallery = () => {
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#ecc153] rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
 
       <div className="relative z-10 w-full px-6 lg:px-12">
-        <div className="text-center mb-10">
-          <span className="text-[#ecc153] uppercase tracking-[0.3em] text-sm font-bold mb-2 block">Cinematic Experience</span>
-          <h2 className="text-4xl md:text-5xl font-serif text-white mb-4 leading-tight">
+        <div className="text-center mb-6 sm:mb-10">
+          <span className="text-[#ecc153] uppercase tracking-[0.3em] text-xs sm:text-sm font-bold mb-2 block">Cinematic Experience</span>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif text-white mb-3 sm:mb-4 leading-tight">
             Saree Moments in <span className="italic text-[#ecc153]">Motion</span>
           </h2>
-          <div className="w-24 h-1 bg-[#ecc153] mx-auto mb-6 rounded-full"></div>
-          <p className="text-white/70 max-w-2xl mx-auto text-base md:text-lg font-light leading-relaxed">
+          <div className="w-24 h-1 bg-[#ecc153] mx-auto mb-4 sm:mb-6 rounded-full"></div>
+          <p className="text-white/70 max-w-2xl mx-auto text-sm sm:text-base md:text-lg font-light leading-relaxed">
             Witness the fluid grace and intricate details of our heritage sarees through these curated visual stories.
           </p>
         </div>
@@ -53,29 +63,29 @@ const VideoGallery = () => {
           <button
             onClick={prevSlide}
             disabled={current === 0}
-            className={`absolute -left-4 lg:left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-[#ecc153] rounded-full text-3xl transition-all duration-300 hover:bg-[#ecc153] hover:text-[#082e21] shadow-xl ${current === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`hidden md:flex absolute -left-4 lg:left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-[#ecc153] rounded-full text-3xl transition-all duration-300 hover:bg-[#ecc153] hover:text-[#082e21] shadow-xl ${current === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
             ‹
           </button>
           <button
             onClick={nextSlide}
             disabled={current >= videos.length - visibleVideos}
-            className={`absolute -right-4 lg:right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-[#ecc153] rounded-full text-3xl transition-all duration-300 hover:bg-[#ecc153] hover:text-[#082e21] shadow-xl ${current >= videos.length - visibleVideos ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`hidden md:flex absolute -right-4 lg:right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-[#ecc153] rounded-full text-3xl transition-all duration-300 hover:bg-[#ecc153] hover:text-[#082e21] shadow-xl ${current >= videos.length - visibleVideos ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
             ›
           </button>
 
-          <div className="overflow-hidden rounded-[2rem]">
+          <div className="overflow-x-auto md:overflow-hidden rounded-[1.5rem] md:rounded-[2rem] custom-scrollbar-horizontal scroll-smooth snap-x snap-mandatory pb-4">
             <div
-              className="flex gap-8 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
-              style={{ transform: `translateX(-${current * (100 / visibleVideos)}%)` }}
+              className="flex gap-6 md:gap-8 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
+              style={{ transform: isMobile ? "none" : `translateX(-${current * (100 / visibleVideos)}%)` }}
             >
               {videos.map((video, index) => (
                 <div
                   key={index}
                   onMouseEnter={() => handleMouseEnter(index)}
                   onMouseLeave={() => handleMouseLeave(index)}
-                  className="min-w-[45%] md:min-w-[30%] lg:min-w-[18%] relative rounded-3xl overflow-hidden group cursor-pointer h-[380px] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5"
+                  className="min-w-[75%] sm:min-w-[45%] md:min-w-[30%] lg:min-w-[18%] snap-center shrink-0 relative rounded-2xl md:rounded-3xl overflow-hidden group cursor-pointer h-[260px] sm:h-[340px] md:h-[380px] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5"
                 >
                   <video
                     ref={(el) => (videoRefs.current[index] = el)}

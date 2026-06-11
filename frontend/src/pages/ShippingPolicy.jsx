@@ -18,7 +18,7 @@ const ShippingPolicy = () => {
     <div className="flex flex-col min-h-screen">
       
       {/* MAIN CONTENT */}
-      <div className="flex-grow max-w-4xl mx-auto p-6">
+      <div className="flex-grow max-w-4xl mx-auto px-4 py-8 sm:p-6 lg:p-10">
         <h1 className="text-3xl font-bold mb-6 text-center">
           Shipping Policy
         </h1>

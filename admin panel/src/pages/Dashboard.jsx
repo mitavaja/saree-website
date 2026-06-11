@@ -32,6 +32,9 @@ const Dashboard = () => {
   // CHART STATE (dynamic)
   const [salesData,setSalesData] = useState([])
 
+  // TOP PRODUCTS STATE (dynamic)
+  const [topProducts, setTopProducts] = useState([])
+
   // DYNAMIC CUSTOMER COUNT WITH POLLING
   useEffect(() => {
     const fetchCustomerStats = async () => {
@@ -87,7 +90,7 @@ const Dashboard = () => {
         const emails = new Set()
 
         orders.forEach(order=>{
-          emails.add(order.email)
+          emails.add(order.address?.email || order.email)
         })
 
         // Use API count primarily, fallback to this
@@ -114,30 +117,47 @@ const Dashboard = () => {
 
         orders.forEach(o=>{
           if(new Date(o.date) > lastWeek){
-            newCust.add(o.email)
+            newCust.add(o.address?.email || o.email)
           }
         })
 
         setNewCustomers(newCust.size)
 
-        // SALES GROWTH
-        const thisMonth = new Date().getMonth()
-        const lastMonth = thisMonth - 1
+        // SALES GROWTH (this month vs last month)
+        const now = new Date()
+        const thisMonthYear = now.getFullYear()
+        const thisMonthVal = now.getMonth() // 0-11
+
+        let lastMonthYear = thisMonthYear
+        let lastMonthVal = thisMonthVal - 1
+        if (lastMonthVal < 0) {
+          lastMonthVal = 11
+          lastMonthYear -= 1
+        }
 
         let thisMonthSales = 0
         let lastMonthSales = 0
 
         orders.forEach(o=>{
-          const month = new Date(o.date).getMonth()
+          const oDate = new Date(o.date)
+          const oYear = oDate.getFullYear()
+          const oMonth = oDate.getMonth()
           const amount = o.amount || o.totalAmount || 0
 
-          if(month === thisMonth) thisMonthSales += amount
-          if(month === lastMonth) lastMonthSales += amount
+          if (oYear === thisMonthYear && oMonth === thisMonthVal) {
+            thisMonthSales += amount
+          } else if (oYear === lastMonthYear && oMonth === lastMonthVal) {
+            lastMonthSales += amount
+          }
         })
 
-        if(lastMonthSales > 0){
+        if (lastMonthSales > 0) {
           const growth = ((thisMonthSales - lastMonthSales) / lastMonthSales) * 100
           setSalesGrowth(growth.toFixed(1))
+        } else if (thisMonthSales > 0) {
+          setSalesGrowth("100.0")
+        } else {
+          setSalesGrowth("0.0")
         }
 
         // CONVERSION RATE
@@ -169,6 +189,33 @@ const Dashboard = () => {
 
         setSalesData(chartData)
 
+        // ===== TOP SELLING PRODUCTS LOGIC =====
+        const productSales = {}
+
+        orders.forEach(order => {
+          if (Array.isArray(order.items)) {
+            order.items.forEach(item => {
+              const name = item.name || "Unknown Product"
+              const qty = item.quantity || 1
+              productSales[name] = (productSales[name] || 0) + qty
+            })
+          } else if (order.items && typeof order.items === "object") {
+            Object.keys(order.items).forEach(key => {
+              const qty = order.items[key] || 1
+              productSales[key] = (productSales[key] || 0) + qty
+            })
+          }
+        })
+
+        const sortedProducts = Object.keys(productSales)
+          .map(name => ({
+            name: name,
+            sales: productSales[name]
+          }))
+          .sort((a, b) => b.sales - a.sales)
+
+        setTopProducts(sortedProducts.slice(0, 5))
+
       } catch (error) {
         console.log(error)
       }
@@ -185,13 +232,6 @@ const Dashboard = () => {
     { title: "Products", value: productCount, icon: <MdInventory size={26} />, color: "bg-green-500" },
     { title: "Revenue", value: revenue, prefix:"₹", icon: <MdCurrencyRupee size={26} />, color: "bg-purple-500" },
     { title: "Customers", value: customerCount, icon: <MdPeople size={26} />, color: "bg-orange-500" }
-  ];
-
-  const topProducts = [
-    { name: "Banarasi Silk Saree", sales: 120 },
-    { name: "Designer Wedding Saree", sales: 98 },
-    { name: "Cotton Printed Saree", sales: 85 },
-    { name: "Party Wear Saree", sales: 70 }
   ];
 
   return (

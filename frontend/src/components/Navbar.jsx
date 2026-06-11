@@ -56,15 +56,15 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full bg-white backdrop-blur-xl sticky top-0 z-[999] shadow-[0_4px_30px_rgba(0,0,0,0.04)] border-b border-[#082e21]/5 transition-all duration-300">
-      <div className="w-full px-6 lg:px-12 flex items-center justify-between py-0 font-medium">
+    <div className="w-full bg-white backdrop-blur-xl sticky top-0 z-[9999] shadow-[0_4px_30px_rgba(0,0,0,0.04)] border-b border-[#082e21]/5 transition-all duration-300">
+      <div className="w-full px-4 sm:px-6 lg:px-12 flex items-center justify-between py-0 font-medium relative">
         
         {/* Logo */}
         <Link to="/" className="flex-shrink-0 flex items-center -my-2 md:-my-4">
           <img
             src={logo || assets.logo}
             alt="logo"
-            className="h-16 md:h-24 w-auto object-contain transition-transform duration-300 hover:scale-105"
+            className="h-12 sm:h-16 md:h-24 w-auto object-contain transition-transform duration-300 hover:scale-105"
           />
         </Link>
 
@@ -95,10 +95,10 @@ const Navbar = () => {
         </ul>
 
         {/* Icons */}
-        <div className="flex items-center gap-5 sm:gap-7 relative text-[#082e21]">
+        <div className="flex items-center gap-4 sm:gap-7 relative text-[#082e21]">
           
-          {/* SEARCH */}
-          <div className="relative flex items-center">
+          {/* Desktop Search */}
+          <div className="hidden md:flex relative items-center">
             <input
               type="text"
               placeholder="Search products..."
@@ -108,7 +108,7 @@ const Navbar = () => {
               transition-all duration-300 ease-in-out
               ${
                 showSearch
-                  ? "w-44 sm:w-72 opacity-100 translate-x-0"
+                  ? "w-72 opacity-100 translate-x-0"
                   : "w-0 opacity-0 translate-x-4 pointer-events-none"
               }`}
             />
@@ -120,9 +120,17 @@ const Navbar = () => {
             </button>
           </div>
 
+          {/* Mobile Search Button (Trigger) */}
+          <button 
+            onClick={() => setShowSearch(true)}
+            className="md:hidden p-1.5 hover:bg-[#082e21]/5 rounded-full transition-colors duration-300"
+          >
+            <LuSearch className="w-[22px] h-[22px] cursor-pointer transition-transform duration-300 hover:scale-110" />
+          </button>
+
           {/* SEARCH RESULT */}
           {showSearch && search && (
-            <div className="fixed top-16 left-4 right-4 md:absolute md:top-16 md:right-0 md:left-auto md:w-[350px] md:translate-x-0 bg-white shadow-[0_15px_40px_rgba(0,0,0,0.1)] border border-gray-100 z-[1000] max-h-[400px] overflow-y-auto rounded-2xl py-2 custom-scrollbar">
+            <div className="fixed top-16 left-4 right-4 md:absolute md:top-16 md:right-0 md:left-auto md:w-[350px] md:translate-x-0 bg-white shadow-[0_15px_40px_rgba(0,0,0,0.1)] border border-gray-100 z-[10002] max-h-[400px] overflow-y-auto rounded-2xl py-2 custom-scrollbar">
               {searchProducts.length > 0 ? (
                 searchProducts.map((item) => {
                   let imgSrc = Array.isArray(item.image) ? item.image[0] : item.image;
@@ -194,27 +202,49 @@ const Navbar = () => {
             <LuMenu className="w-[20px] h-[20px] cursor-pointer" />
           </button>
         </div>
+
+        {/* Mobile Search Overlay */}
+        {showSearch && (
+          <div className="absolute inset-0 bg-white flex items-center px-4 gap-3 z-50 md:hidden animate-in fade-in duration-200">
+            <button 
+              onClick={() => { setShowSearch(false); setSearch(""); }}
+              className="p-2 text-[#082e21] hover:bg-[#082e21]/5 rounded-full transition-colors font-bold text-lg"
+            >
+              ✕
+            </button>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="flex-1 pl-4 pr-10 py-2.5 text-sm text-[#082e21] bg-[#082e21]/5 outline-none border border-[#082e21]/10 rounded-full placeholder:text-[#082e21]/40"
+              autoFocus
+            />
+          </div>
+        )}
       </div>
 
       {/* Mobile Sidebar Menu Backdrop */}
       <div 
-        className={`fixed inset-0 bg-black/40 z-[9999] transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-[10000] transition-opacity duration-300 md:hidden ${
           visible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
         onClick={() => setVisible(false)}
       />
       
       {/* Mobile Sidebar Drawer */}
       <div 
-        className={`fixed top-0 right-0 bottom-0 w-3/4 max-w-[300px] bg-white z-[10000] shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
+        className={`fixed top-0 right-0 bottom-0 w-3/4 max-w-[300px] border-l border-gray-200 z-[10001] shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
           visible ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{ backgroundColor: '#ffffff' }}
       >
-        <div className="flex items-center justify-between p-6 border-b border-[#082e21]/10">
+        <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <span className="font-serif text-lg font-bold text-[#082e21]">Menu</span>
           <button 
             onClick={() => setVisible(false)}
-            className="text-[#082e21] p-1.5 rounded-full hover:bg-[#082e21]/5 font-bold transition-colors"
+            className="text-[#082e21] hover:text-red-600 p-1.5 rounded-full hover:bg-gray-100 font-bold transition-colors"
           >
             ✕
           </button>
@@ -228,8 +258,8 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `px-8 py-3.5 text-[15px] font-semibold tracking-wider transition-colors border-l-4 ${
                   isActive 
-                    ? "text-[#082e21] bg-[#082e21]/5 border-[#082e21]" 
-                    : "text-[#082e21]/70 border-transparent hover:bg-gray-50"
+                    ? "text-[#ecc153] bg-[#082e21] border-[#ecc153]" 
+                    : "text-[#082e21]/70 border-transparent hover:bg-gray-50 hover:text-[#082e21]"
                 }`
               }
             >
@@ -242,8 +272,8 @@ const Navbar = () => {
             className={({ isActive }) =>
               `px-8 py-3.5 text-[15px] font-semibold tracking-wider transition-colors border-l-4 ${
                 isActive 
-                  ? "text-[#082e21] bg-[#082e21]/5 border-[#082e21]" 
-                  : "text-[#082e21]/70 border-transparent hover:bg-gray-50"
+                  ? "text-[#ecc153] bg-[#082e21] border-[#ecc153]" 
+                  : "text-[#082e21]/70 border-transparent hover:bg-gray-50 hover:text-[#082e21]"
               }`
             }
           >
@@ -255,8 +285,8 @@ const Navbar = () => {
             className={({ isActive }) =>
               `px-8 py-3.5 text-[15px] font-semibold tracking-wider transition-colors border-l-4 ${
                 isActive 
-                  ? "text-[#082e21] bg-[#082e21]/5 border-[#082e21]" 
-                  : "text-[#082e21]/70 border-transparent hover:bg-gray-50"
+                  ? "text-[#ecc153] bg-[#082e21] border-[#ecc153]" 
+                  : "text-[#082e21]/70 border-transparent hover:bg-gray-50 hover:text-[#082e21]"
               }`
             }
           >

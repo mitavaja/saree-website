@@ -33,7 +33,7 @@ const Hero = () => {
 
   return (
     
-    <div className="relative w-full h-[calc(100vh-80px)] overflow-hidden">
+    <div className="relative w-full h-[50vh] sm:h-[70vh] md:h-[calc(100vh-80px)] overflow-hidden">
       <div className="absolute inset-0 transition-opacity duration-1000 opacity-100 z-10">
         <img
           src={`http://localhost:5000${slide.image}`}
@@ -48,10 +48,10 @@ const Hero = () => {
         {/* CENTER CONTENT */}
         <div className="absolute inset-0 flex items-center justify-center text-center z-20 px-6">
           <div className="text-white max-w-2xl">
-            <h2 className="text-4xl md:text-6xl font-serif mb-4 leading-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-serif mb-4 leading-tight">
               {slide.title}
             </h2>
-            <p className="text-lg md:text-2xl mb-6 text-[#ecc153]">
+            <p className="text-xs sm:text-base md:text-2xl mb-6 text-[#ecc153]">
               {slide.subtitle}
             </p>
 
@@ -69,14 +69,14 @@ const Hero = () => {
       {/* Navigation */}
       <button
         onClick={prevSlide}
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-30 bg-[#082e21]/80 hover:bg-[#082e21] text-[#ecc153] px-4 py-2 rounded-full text-2xl transition"
+        className="hidden sm:block absolute left-6 top-1/2 -translate-y-1/2 z-30 bg-[#082e21]/80 hover:bg-[#082e21] text-[#ecc153] px-4 py-2 rounded-full text-2xl transition"
       >
         ‹
       </button>
 
       <button
         onClick={nextSlide}
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-30 bg-[#082e21]/80 hover:bg-[#082e21] text-[#ecc153] px-4 py-2 rounded-full text-2xl transition"
+        className="hidden sm:block absolute right-6 top-1/2 -translate-y-1/2 z-30 bg-[#082e21]/80 hover:bg-[#082e21] text-[#ecc153] px-4 py-2 rounded-full text-2xl transition"
       >
         ›
       </button>

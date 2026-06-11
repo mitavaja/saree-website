@@ -63,16 +63,16 @@ const Product = () => {
 
   return (
 
-    <div className="border-t pt-10 px-6 lg:px-20">
+    <div className="border-t pt-6 sm:pt-10 px-4 sm:px-6 lg:px-20">
 
       {/* PRODUCT SECTION */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 
         {/* LEFT SIDE */}
-        <div className="flex gap-4 w-full">
+        <div className="flex flex-col-reverse sm:flex-row gap-4 w-full">
 
           {/* THUMBNAILS */}
-          <div className="flex flex-col gap-3">
+          <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-x-visible pb-2 sm:pb-0 scrollbar-none">
 
             <img
               src={productData.image}
@@ -115,14 +115,14 @@ const Product = () => {
               {!showVideo ? (
                 <img
                   src={activeImage}
-                  className="w-full max-w-md h-[450px] object-cover hover:scale-105 transition"
+                  className="w-full sm:max-w-md h-[300px] sm:h-[450px] object-cover hover:scale-105 transition rounded-lg"
                   alt=""
                 />
               ) : (
                 <video
                   src={productData.video}
                   controls
-                  className="w-full max-w-md h-[450px] object-cover"
+                  className="w-full sm:max-w-md h-[300px] sm:h-[450px] object-cover rounded-lg"
                 />
               )}
 
@@ -135,7 +135,7 @@ const Product = () => {
         <div className="w-full lg:pl-4">
 
           {/* TITLE */}
-          <h1 className="text-3xl font-semibold mb-4">
+          <h1 className="text-2xl sm:text-3xl font-semibold mb-4 text-[#082e21]">
             {productData.name}
           </h1>
 

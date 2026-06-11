@@ -37,9 +37,15 @@ const Trending = () => {
 
     const handleMouseEnter = () => (isHovered = true);
     const handleMouseLeave = () => (isHovered = false);
+    const handleTouchStart = () => (isHovered = true);
+    const handleTouchEnd = () => {
+      isHovered = false;
+    };
 
     slider.addEventListener("mouseenter", handleMouseEnter);
     slider.addEventListener("mouseleave", handleMouseLeave);
+    slider.addEventListener("touchstart", handleTouchStart, { passive: true });
+    slider.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     const animate = () => {
       if (!isHovered) {
@@ -58,6 +64,8 @@ const Trending = () => {
       cancelAnimationFrame(raf);
       slider.removeEventListener("mouseenter", handleMouseEnter);
       slider.removeEventListener("mouseleave", handleMouseLeave);
+      slider.removeEventListener("touchstart", handleTouchStart);
+      slider.removeEventListener("touchend", handleTouchEnd);
     };
   }, [items]);
 
@@ -83,7 +91,7 @@ const Trending = () => {
       <div className="relative z-10 w-full overflow-hidden px-4 md:px-8">
         <div
           ref={sliderRef}
-          className="flex gap-6 sm:gap-10 overflow-x-hidden cursor-grab active:cursor-grabbing pb-4 pt-2"
+          className="flex gap-6 sm:gap-10 overflow-x-auto scrollbar-none md:overflow-x-hidden cursor-grab active:cursor-grabbing pb-4 pt-2"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",

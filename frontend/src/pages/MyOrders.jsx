@@ -110,7 +110,7 @@ const MyOrders = () => {
 
         {/* Tracking Timeline */}
         {order.status !== "Cancelled" && order.status !== "Delivered" && (
-          <div className="w-full mb-10 overflow-x-auto py-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="w-full mb-10 overflow-x-auto py-2 custom-scrollbar-horizontal">
             <div className="min-w-[700px] flex items-center justify-between relative px-6">
               <div className="absolute left-10 right-10 top-1/2 h-1 bg-gray-100 -z-10 -translate-y-1/2 rounded-full"></div>
               <div className={`absolute left-10 top-1/2 h-1 bg-[#082e21] -z-10 -translate-y-1/2 transition-all duration-1000 rounded-full`} style={{ width: `${(step - 1) * 25}%` }}></div>
@@ -209,16 +209,16 @@ const MyOrders = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 -mt-8 relative z-20">
         
         {/* Modern Tabs */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-2 inline-flex gap-2 mb-10">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-1.5 flex gap-1.5 mb-10 w-full max-w-md overflow-x-auto sm:overflow-x-visible scrollbar-none">
           <button 
             onClick={() => setActiveTab("current")}
-            className={`px-8 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === "current" ? "bg-[#082e21] text-[#ecc153] shadow-md" : "text-gray-500 hover:bg-gray-50"}`}
+            className={`flex-1 sm:flex-none text-center whitespace-nowrap px-6 sm:px-8 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === "current" ? "bg-[#082e21] text-[#ecc153] shadow-md" : "text-gray-500 hover:bg-gray-50"}`}
           >
             Current Orders ({currentOrders.length})
           </button>
           <button 
             onClick={() => setActiveTab("past")}
-            className={`px-8 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === "past" ? "bg-[#082e21] text-[#ecc153] shadow-md" : "text-gray-500 hover:bg-gray-50"}`}
+            className={`flex-1 sm:flex-none text-center whitespace-nowrap px-6 sm:px-8 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === "past" ? "bg-[#082e21] text-[#ecc153] shadow-md" : "text-gray-500 hover:bg-gray-50"}`}
           >
             Past Orders ({pastOrders.length})
           </button>

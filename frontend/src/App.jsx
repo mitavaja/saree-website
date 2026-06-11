@@ -34,7 +34,7 @@ const App = () => {
         <ShopContextProvider>
 
           <Navbar />
-          <div className="w-full overflow-x-clip">
+          <div className="w-full overflow-x-clip pb-16 md:pb-0">
 
             <Routes>
               <Route path="/" element={<Home />} />

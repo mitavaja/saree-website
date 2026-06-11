@@ -27,18 +27,18 @@ const ProductItem = ({ id, image, name, price, category, rating = 4 }) => {
                 <img
                     src={image}
                     alt={name}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition duration-300"
+                    className="w-full h-40 sm:h-56 md:h-64 object-cover group-hover:scale-110 transition duration-300"
                 />
             </Link>
 
-            <div className="p-4">
+            <div className="p-3 sm:p-4">
                 
                 {/* Category */}
                 <p className="text-xs text-gray-400 uppercase tracking-wide">{category}</p>
 
                 {/* Name */}
                 <Link to={`/product/${id}`}>
-                    <p className="text-sm font-semibold mt-1 text-gray-800 line-clamp-2 hover:text-pink-600">
+                    <p className="text-xs sm:text-sm font-semibold mt-1 text-gray-800 line-clamp-2 hover:text-pink-600">
                         {name}
                     </p>
                 </Link>
@@ -53,17 +53,17 @@ const ProductItem = ({ id, image, name, price, category, rating = 4 }) => {
                 <div className="flex items-center justify-between mt-3">
                     
                     {/* Price */}
-                    <p className="text-base font-bold text-gray-900">
+                    <p className="text-sm sm:text-base font-bold text-gray-900">
                         {currency}{price}
                     </p>
 
                     {/* Wishlist */}
                     <button
                         onClick={handleWishlist}
-                        className="bg-gray-100 p-2 rounded-full hover:bg-pink-100 transition"
+                        className="bg-gray-100 p-1.5 sm:p-2 rounded-full hover:bg-pink-100 transition"
                     >
                         <FaHeart
-                            className={`text-lg ${isWishlisted ? "text-red-500" : "text-gray-400"}`}
+                            className={`text-base sm:text-lg ${isWishlisted ? "text-red-500" : "text-gray-400"}`}
                         />
                     </button>
 

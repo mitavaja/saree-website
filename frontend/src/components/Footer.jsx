@@ -38,7 +38,7 @@ const Footer = () => {
           href={`https://wa.me/${data.whatsapp}`}
           target="_blank"
           rel="noreferrer"
-          className="fixed bottom-6 right-6 z-50 bg-green-500 p-3 rounded-full shadow-2xl hover:scale-110 transition-all"
+          className={`fixed right-6 z-50 bg-green-500 p-3 rounded-full shadow-2xl hover:scale-110 transition-all ${data.whatsapp ? "bottom-20 md:bottom-6" : "bottom-6"}`}
         >
           <FaWhatsapp className="text-white w-7 h-7" />
         </a>
@@ -65,7 +65,7 @@ const Footer = () => {
 
         <div className="max-w-7xl mx-auto px-6 py-16">
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
 
             {/* Contact */}
             <div>

@@ -18,3 +18,19 @@ a.active hr{
     color: #ecc153;
   }
 }
+
+/* Custom horizontal scrollbar */
+.custom-scrollbar-horizontal::-webkit-scrollbar {
+  height: 4px;
+}
+.custom-scrollbar-horizontal::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 10px;
+}
+.custom-scrollbar-horizontal::-webkit-scrollbar-thumb {
+  background: #082e21;
+  border-radius: 10px;
+}
+.custom-scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
+  background: #0b3d2c;
+}

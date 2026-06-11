@@ -72,7 +72,7 @@ const MyProfile = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 -mt-32 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 -mt-24 sm:-mt-32 relative z-10">
         
         {userOrders && userOrders.length === 0 ? (
           <motion.div 
@@ -166,7 +166,7 @@ const MyProfile = () => {
             transition={{ delay: 0.1 }}
             className="w-full md:w-2/3"
           >
-            <div className="bg-white rounded-3xl shadow-lg border border-gray-100 p-8 md:p-12">
+            <div className="bg-white rounded-2xl md:rounded-3xl shadow-lg border border-gray-100 p-5 sm:p-8 md:p-12">
               <h3 className="text-2xl font-serif text-[#082e21] mb-8 pb-4 border-b border-gray-100">Personal Information</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -217,7 +217,7 @@ const MyProfile = () => {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-3xl p-8 w-full max-w-lg shadow-2xl relative"
+            className="bg-white rounded-2xl md:rounded-3xl p-6 sm:p-8 w-full max-w-lg shadow-2xl relative"
           >
             <button 
               onClick={()=>setShowModal(false)}

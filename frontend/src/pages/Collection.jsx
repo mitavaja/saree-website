@@ -52,7 +52,7 @@ const Collection = () => {
   };
 
   const FilterContent = ({ isMobile }) => (
-    <div className={`bg-[#082e21] text-white p-6 md:p-8 rounded-3xl shadow-xl ${isMobile ? "h-full overflow-y-auto" : "sticky top-28"}`}>
+    <div className={`bg-[#082e21] text-white p-6 md:p-8 ${isMobile ? "h-full overflow-y-auto" : "rounded-3xl shadow-xl sticky top-28"}`}>
       <div className="flex justify-between items-center mb-8">
         <h3 className="text-xl md:text-2xl font-serif text-[#ecc153]">
           Refine By
@@ -142,20 +142,20 @@ const Collection = () => {
     <div className="bg-white min-h-screen">
       
       {/* Premium Header Banner */}
-      <div className="w-full h-64 md:h-80 bg-gradient-to-r from-[#082e21] via-[#0b3d2c] to-[#082e21] relative overflow-hidden flex items-center justify-center shadow-2xl">
+      <div className="w-full h-48 sm:h-64 md:h-80 bg-gradient-to-r from-[#082e21] via-[#0b3d2c] to-[#082e21] relative overflow-hidden flex items-center justify-center shadow-2xl">
         {/* Decor */}
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         
-        <div className="relative z-10 text-center px-6">
-          <span className="text-[#ecc153] uppercase tracking-[0.4em] text-sm font-bold mb-4 block">Premium Heritage</span>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-6 tracking-tight drop-shadow-2xl">
+        <div className="relative z-10 text-center px-4 md:px-6">
+          <span className="text-[#ecc153] uppercase tracking-[0.4em] text-xs sm:text-sm font-bold mb-3 sm:mb-4 block">Premium Heritage</span>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-4 sm:mb-6 tracking-tight drop-shadow-2xl">
             Our <span className="text-[#ecc153] italic">Collection</span>
           </h1>
           <div className="w-32 h-1 bg-[#ecc153] mx-auto rounded-full"></div>
         </div>
       </div>
 
-      <div className="w-full px-6 lg:px-12 py-12 md:py-20">
+      <div className="w-full px-4 sm:px-6 lg:px-12 py-8 sm:py-12 md:py-20">
         
         {/* Mobile Filter Toggle */}
         <div className="md:hidden flex justify-between items-center mb-10 bg-[#082e21]/5 p-6 rounded-[2rem] border border-[#082e21]/10">
@@ -201,7 +201,7 @@ const Collection = () => {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-10">
+              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-10">
                   {filteredProducts.map((item) => (
                     <div key={item._id} className="h-full">
                       <ProductItem
@@ -218,20 +218,24 @@ const Collection = () => {
         </div>
       </div>
 
-      {/* Mobile Filter Drawer */}
-      {openFilter && (
-        <>
-          <div 
-            className="fixed inset-0 z-[1000] bg-[#082e21]/80"
-            onClick={() => setOpenFilter(false)}
-          />
-          <div 
-            className="fixed inset-y-0 right-0 z-[1001] w-full max-w-[400px] shadow-[-20px_0_50px_rgba(0,0,0,0.5)] bg-white animate-slide-in-right"
-          >
-            <FilterContent isMobile={true} />
-          </div>
-        </>
-      )}
+      {/* Mobile Filter Drawer Backdrop */}
+      <div 
+        className={`fixed inset-0 backdrop-blur-sm z-[1000] transition-opacity duration-300 md:hidden ${
+          openFilter ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        onClick={() => setOpenFilter(false)}
+      />
+      
+      {/* Mobile Filter Drawer Content */}
+      <div 
+        className={`fixed top-0 right-0 bottom-0 w-3/4 max-w-[300px] border-l border-[#ecc153]/10 z-[1001] shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
+          openFilter ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{ backgroundColor: '#082e21' }}
+      >
+        <FilterContent isMobile={true} />
+      </div>
 
       <Footer />
     </div>

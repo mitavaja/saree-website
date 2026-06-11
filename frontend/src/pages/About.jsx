@@ -74,8 +74,8 @@ const About = () => {
       </div>
 
       {/* STORY SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-24">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 md:py-24">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
           
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -88,7 +88,7 @@ const About = () => {
               {data?.storyTitle || "A Legacy of Elegance"}
             </h3>
 
-            <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 relative">
+            <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-xl border border-gray-100 relative">
               <div className="absolute top-0 left-0 w-2 h-full bg-[#ecc153] rounded-l-3xl"></div>
               <p className="text-gray-600 leading-relaxed text-lg mb-6">
                 {data?.storyDesc1}
@@ -107,7 +107,7 @@ const About = () => {
             className="relative"
           >
             <div className="absolute inset-0 bg-[#ecc153] rounded-[3rem] translate-x-6 translate-y-6 opacity-30 blur-lg"></div>
-            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
+            <div className="relative rounded-[1.5rem] md:rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
               <img
                 src={
                   data?.storyImage
@@ -115,7 +115,7 @@ const About = () => {
                     : "https://via.placeholder.com/600"
                 }
                 alt="story"
-                className="w-full h-[500px] object-cover hover:scale-110 transition duration-1000"
+                className="w-full h-[280px] sm:h-[400px] md:h-[500px] object-cover hover:scale-110 transition duration-1000"
               />
             </div>
           </motion.div>
@@ -124,7 +124,7 @@ const About = () => {
       </div>
 
       {/* BANNER OVERLAY */}
-      <div className="w-full relative py-32 overflow-hidden flex items-center justify-center">
+      <div className="w-full relative py-16 md:py-32 overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1610030469983-98e550d615ef?auto=format&fit=crop&q=80')] bg-cover bg-center bg-fixed"></div>
         <div className="absolute inset-0 bg-[#082e21]/80 backdrop-blur-sm"></div>
         
@@ -144,7 +144,7 @@ const About = () => {
       {/* REDEFINING SAREE FASHION */}
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex flex-col md:flex-row items-center gap-16">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
             <div className="w-full md:w-1/2">
               <span className="text-[#ecc153] uppercase tracking-[0.3em] text-sm font-bold mb-4 block">
                 {data?.redefineSubtitle || "Modern Innovation"}
@@ -182,7 +182,7 @@ const About = () => {
             </div>
             <div className="w-full md:w-1/2 relative">
               <div className="absolute -top-10 -right-10 w-64 h-64 bg-[#ecc153]/10 rounded-full blur-3xl"></div>
-              <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl">
+              <div className="relative rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <img 
                   src={
                     data?.redefineImage 
@@ -190,7 +190,7 @@ const About = () => {
                       : "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80"
                   } 
                   alt="Modern Saree" 
-                  className="w-full h-[600px] object-cover transition-transform duration-700 hover:scale-105"
+                  className="w-full h-[300px] sm:h-[450px] md:h-[600px] object-cover transition-transform duration-700 hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#082e21]/40 to-transparent"></div>
               </div>
@@ -200,7 +200,7 @@ const About = () => {
       </section>
 
       {/* WHY CHOOSE US */}
-      <div className="py-24 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
+      <div className="py-12 md:py-24 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-sm font-bold text-gray-400 uppercase tracking-[0.3em] mb-3">Excellence</h2>
           <h3 className="text-4xl md:text-5xl font-serif text-[#082e21]">
@@ -218,7 +218,7 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 whileHover={{ y: -10 }}
-                className="bg-white p-10 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
+                className="bg-white p-6 sm:p-10 rounded-2xl md:rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 group relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#ecc153] rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110 opacity-20"></div>
                 <div className="w-16 h-16 bg-[#082e21]/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#082e21] transition-colors duration-300">
@@ -246,7 +246,7 @@ const About = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-[#082e21] rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl"
+          className="bg-[#082e21] rounded-[1.5rem] md:rounded-[3rem] p-6 sm:p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl"
         >
           <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
           <div className="relative z-10">

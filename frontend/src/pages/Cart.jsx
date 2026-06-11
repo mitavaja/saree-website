@@ -31,7 +31,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="max-w-5xl mx-auto p-6 min-h-[70vh]">
+      <div className="max-w-5xl mx-auto p-4 sm:p-6 min-h-[70vh]">
 
         {cartProductIds.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-center h-[60vh]">
@@ -68,20 +68,20 @@ const Cart = () => {
               return (
                 <div
                   key={itemId}
-                  className="flex justify-between items-center border-b py-4"
+                  className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b py-4"
                 >
 
                   {/* LEFT */}
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 w-full sm:w-auto">
 
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-16 h-16 object-cover"
+                      className="w-16 h-16 object-cover rounded-md flex-shrink-0"
                     />
 
                     <div>
-                      <p className="font-medium">{product.name}</p>
+                      <p className="font-medium text-sm sm:text-base">{product.name}</p>
 
                       <p className="text-sm text-gray-500">
                         {currency}{product.price}
@@ -90,47 +90,52 @@ const Cart = () => {
 
                   </div>
 
-                  {/* QTY CONTROLS */}
-                  <div className="flex items-center gap-2">
+                  {/* RIGHT CONTROLS */}
+                  <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto mt-2 sm:mt-0">
 
-                    {/* - BUTTON */}
+                    {/* QTY CONTROLS */}
+                    <div className="flex items-center gap-2">
+
+                      {/* - BUTTON */}
+                      <button
+                        onClick={() => {
+                          if (cartItems[itemId] > 1) {
+                            removeFromCart(itemId);
+                          } else {
+                            removeFromCart(itemId);
+                          }
+                        }}
+                        className="px-2.5 py-1 border rounded hover:bg-gray-50 transition"
+                      >
+                        -
+                      </button>
+
+                      <span className="w-8 text-center font-medium">{cartItems[itemId]}</span>
+
+                      {/* + BUTTON */}
+                      <button
+                        onClick={() => addToCart(itemId)}
+                        className="px-2.5 py-1 border rounded hover:bg-gray-50 transition"
+                      >
+                        +
+                      </button>
+
+                    </div>
+
+                    {/* PRICE */}
+                    <div className="font-semibold text-right min-w-[70px]">
+                      {currency}{product.price * cartItems[itemId]}
+                    </div>
+
+                    {/* DELETE */}
                     <button
-                      onClick={() => {
-                        if (cartItems[itemId] > 1) {
-                          removeFromCart(itemId);
-                        } else {
-                          removeFromCart(itemId);
-                        }
-                      }}
-                      className="px-2 py-1 border rounded"
+                      onClick={() => removeFromCart(itemId)}
+                      className="text-red-600 hover:text-red-800 text-lg p-2 hover:bg-red-50 rounded-full transition"
                     >
-                      -
-                    </button>
-
-                    <span>{cartItems[itemId]}</span>
-
-                    {/* + BUTTON */}
-                    <button
-                      onClick={() => addToCart(itemId)}
-                      className="px-2 py-1 border rounded"
-                    >
-                      +
+                      <FaTrash />
                     </button>
 
                   </div>
-
-                  {/* PRICE */}
-                  <div className="font-semibold">
-                    {currency}{product.price * cartItems[itemId]}
-                  </div>
-
-                  {/* DELETE */}
-                  <button
-                    onClick={() => removeFromCart(itemId)}
-                    className="text-red-600 hover:text-red-800 text-lg"
-                  >
-                    <FaTrash />
-                  </button>
 
                 </div>
               );
